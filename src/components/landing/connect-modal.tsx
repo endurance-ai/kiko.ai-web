@@ -1,81 +1,43 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import {
-  MessageSquare,
-  Send,
-  Sparkles,
-  X,
-} from "lucide-react";
+import {MessageSquare, Send, Sparkles,} from "lucide-react";
+import {Dialog, DialogContent, DialogTitle,} from "@/components/ui/dialog";
 
 export type ConnectTab = "telegram" | "sms";
 
 export function ConnectModal({
-  initialTab,
-  onClose,
+  open,
+  onOpenChange,
+  tab,
+  onTabChange,
 }: {
-  initialTab: ConnectTab;
-  onClose: () => void;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  tab: ConnectTab;
+  onTabChange: (tab: ConnectTab) => void;
 }) {
-  const [tab, setTab] = useState<ConnectTab>(initialTab);
-  const onCloseRef = useRef(onClose);
-
-  useEffect(() => {
-    onCloseRef.current = onClose;
-  });
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onCloseRef.current();
-    };
-    window.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
-    };
-  }, []);
-
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-6 backdrop-blur"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="connect-title"
-    >
-      <div className="relative w-full max-w-[440px] overflow-hidden rounded-3xl border border-white/10 bg-[#0e0e10] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="relative w-full max-w-[440px] overflow-hidden rounded-3xl border border-white/10 bg-[#0e0e10] p-0 text-white ring-0 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] sm:max-w-[440px]">
         <div
           aria-hidden
           className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-[radial-gradient(circle,rgba(245,166,35,0.18),transparent_70%)] blur-2xl"
         />
-
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute right-4 top-4 z-10 flex size-8 items-center justify-center rounded-full bg-white/5 text-white/60 transition-colors hover:bg-white/10 hover:text-white"
-          aria-label="Close"
-        >
-          <X className="size-4" />
-        </button>
 
         <div className="relative px-7 pb-8 pt-7">
           {/* Tabs */}
           <div className="mx-auto inline-flex w-fit items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] p-1 text-[12.5px] font-semibold">
             <TabButton
               active={tab === "sms"}
-              onClick={() => setTab("sms")}
+              onClick={() => onTabChange("sms")}
               icon={<MessageSquare className="size-3.5" />}
             >
               iMessage
             </TabButton>
             <TabButton
               active={tab === "telegram"}
-              onClick={() => setTab("telegram")}
+              onClick={() => onTabChange("telegram")}
               icon={<Send className="size-3.5" />}
             >
               Telegram
@@ -84,8 +46,8 @@ export function ConnectModal({
 
           {tab === "telegram" ? <TelegramPanel /> : <SmsPanel />}
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -119,12 +81,11 @@ function TabButton({
 function TelegramPanel() {
   return (
     <div className="mt-6">
-      <h2
-        id="connect-title"
+      <DialogTitle
         className="text-center text-[22px] font-extrabold tracking-[-0.02em] text-white"
       >
         Scan with Telegram
-      </h2>
+      </DialogTitle>
       <p className="mt-1.5 text-center text-[13.5px] text-white/55">
         Scan the code to open{" "}
         <span className="font-semibold text-white/80">
@@ -168,12 +129,11 @@ function SmsPanel() {
         Coming soon
       </div>
 
-      <h2
-        id="connect-title"
+      <DialogTitle
         className="mt-4 text-center text-[22px] font-extrabold tracking-[-0.02em] text-white"
       >
         iMessage support is on the way.
-      </h2>
+      </DialogTitle>
       <p className="mx-auto mt-3 max-w-[340px] text-center text-[13.5px] leading-relaxed text-white/55">
         We&apos;re still wiring up iMessage. In the meantime, you can chat with
         kiko on Telegram — same features, no waiting.
