@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# kiko.ai-web
 
-## Getting Started
+Marketing landing page for **kiko.ai** — a chat-native shopping agent that lives in Telegram and iMessage.
 
-First, run the development server:
+Single viewport, "noscroll" inspired one-pager. Drop a Pinterest, Instagram, or product link to `@kiko_fashion_ai_bot` and kiko hunts the same item across the web in under 30 seconds.
+
+## Stack
+
+- **Next.js 16** (App Router, Turbopack)
+- **React 19** · **TypeScript**
+- **Tailwind CSS v4** · **shadcn/ui** (base-nova, neutral)
+- **lucide-react** icons
+- **pnpm** workspace, Node 22
+
+## Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
+# → http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command | What it does |
+|---|---|
+| `pnpm dev` | Start dev server (Turbopack) |
+| `pnpm build` | Production build |
+| `pnpm start` | Start production server |
+| `pnpm lint` | Run ESLint |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project layout
 
-## Learn More
+```
+src/
+├── app/
+│   ├── layout.tsx           # Helvetica system stack, dark body, metadata
+│   ├── page.tsx             # Composes Starfield + Hero + Features + Footer
+│   ├── globals.css          # Tailwind v4 + kiko shimmer tokens
+│   └── favicon.ico
+├── components/
+│   ├── landing/
+│   │   ├── starfield.tsx    # Canvas star background
+│   │   ├── hero.tsx         # "Stop browsing. Ask kiko.ai." + CTA + mockup
+│   │   ├── telegram-mockup.tsx  # Auto-played Pinterest → cheaper demo
+│   │   ├── connect-modal.tsx    # iMessage/Telegram tab modal + QR
+│   │   ├── features.tsx     # 3×2 dark feature cards
+│   │   └── footer.tsx
+│   └── ui/                  # shadcn primitives
+└── lib/utils.ts
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Brand
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Hero copy: **Stop browsing. Ask kiko.ai.**
+- Accent: orange shimmer gradient (`#8B1A00` → `#F5A623`, 60s loop)
+- Mascot: 🐈‍⬛ in a shopping bag (`public/logo.jpg`)
+- Bot handle: [`@kiko_fashion_ai_bot`](https://t.me/kiko_fashion_ai_bot)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Branches
 
-## Deploy on Vercel
+- `main` — release branch (production)
+- `dev` — default working branch
+- `feature/*` — work branches, PR'd into `dev`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## CI
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+GitHub Actions runs **Lint** + **Build** on every push and PR to `main` / `dev`. See [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+
+PRs are auto-assigned, labeled by commit message convention (`feat:`, `fix:`, `docs:` …), and reviewed by [@bbbang105](https://github.com/bbbang105).
