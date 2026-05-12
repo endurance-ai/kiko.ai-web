@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { MessagesSquare, Send } from "lucide-react";
-import { TelegramMockup } from "./telegram-mockup";
-import { ConnectModal, type ConnectTab } from "./connect-modal";
+import {useState} from "react";
+import {MessagesSquare, Send} from "lucide-react";
+import {TelegramMockup} from "./telegram-mockup";
+import {ConnectModal, type ConnectTab} from "./connect-modal";
 
 export function Hero() {
   const [modal, setModal] = useState<{ open: boolean; tab: ConnectTab }>({
@@ -12,7 +12,8 @@ export function Hero() {
   });
 
   const openModal = (tab: ConnectTab) => setModal({ open: true, tab });
-  const closeModal = () => setModal((s) => ({ ...s, open: false }));
+  const onOpenChange = (open: boolean) => setModal((s) => ({ ...s, open }));
+  const onTabChange = (tab: ConnectTab) => setModal((s) => ({ ...s, tab }));
 
   return (
     <section className="relative z-10 flex min-h-screen flex-col">
@@ -75,9 +76,12 @@ export function Hero() {
         </div>
       </div>
 
-      {modal.open && (
-        <ConnectModal initialTab={modal.tab} onClose={closeModal} />
-      )}
+      <ConnectModal
+        open={modal.open}
+        onOpenChange={onOpenChange}
+        tab={modal.tab}
+        onTabChange={onTabChange}
+      />
     </section>
   );
 }
