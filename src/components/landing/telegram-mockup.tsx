@@ -1,86 +1,202 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Image from "next/image";
-import {Check, ChevronLeft, MoreVertical, Send} from "lucide-react";
+import {Check, ChevronLeft, MoreVertical, Send,} from "lucide-react";
 
-type Step =
-  | { kind: "idle" }
-  | { kind: "typing"; text: string }
-  | { kind: "user-sent"; text: string }
-  | { kind: "kiko-typing" }
-  | { kind: "kiko-msg"; index: number };
+const USER_URL = "https://pin.it/2OsJs9zM6";
 
-const USER_INPUT = "https://pin.it/3kQ8mZx";
+type ProductCard = {
+  name: string;
+  brand: string;
+  price: string;
+  store: string;
+  image: string;
+  highlight: "cheaper" | "more";
+};
 
-const KIKO_MESSAGES: Array<{ body: React.ReactNode; key: string }> = [
-  { key: "found", body: <>Got it — scanning the pin… 🔍</> },
-  {
-    key: "match",
-    body: (
-      <>
-        Found a match:
-        <br />
-        <b>Vintage Leather Tote — Cognac</b>
-      </>
-    ),
-  },
-  {
-    key: "compare",
-    body: (
-      <div>
-        <div className="flex items-center justify-between gap-3 text-[13px]">
-          <span className="text-white/70 line-through">Pinterest seller · $245</span>
-        </div>
-        <div className="mt-1 flex items-center justify-between gap-3 text-[15px] font-semibold">
-          <span>eBay (verified)</span>
-          <span className="text-[#F5A623]">$128</span>
-        </div>
-        <div className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-[#F5A623]/15 px-2 py-0.5 text-[11px] font-semibold text-[#F5A623]">
-          −47% · same item
-        </div>
-      </div>
-    ),
-  },
-  { key: "cta", body: <>Want me to send the checkout link? 🛒</> },
-];
+const CARD_FIRST: ProductCard = {
+  name: "RELAXED LINEN SHIRT",
+  brand: "COS",
+  price: "$149",
+  store: "cos.com",
+  image: "/products/shirt-cos.avif",
+  highlight: "cheaper",
+};
+
+const CARD_SECOND: ProductCard = {
+  name: "LINEN SHIRT — RELAXED FIT",
+  brand: "Zara",
+  price: "$59",
+  store: "zara.com",
+  image: "/products/shirt-zara.jpg",
+  highlight: "more",
+};
+
+const CARD_BUTTONS = [
+  { emoji: "♥", label: "More", match: "more" },
+  { emoji: "✕", label: "Other", match: null },
+  { emoji: "💰", label: "Cheaper", match: "cheaper" },
+  { emoji: "👀", label: "Details", match: null },
+] as const;
+
+const TYPING_DELAYS = [0, 0.15, 0.3] as const;
+
+type Bubble =
+  | { kind: "user-url"; key: string }
+  | { kind: "user-chip"; key: string; emoji: string; label: string }
+  | { kind: "kiko-text"; key: string; body: React.ReactNode }
+  | { kind: "kiko-card"; key: string; product: ProductCard };
 
 export function TelegramMockup() {
-  const [step, setStep] = useState<Step>({ kind: "idle" });
+  const [typingUrl, setTypingUrl] = useState<string | null>(null);
+  const [bubbles, setBubbles] = useState<Bubble[]>([]);
+  const [kikoTyping, setKikoTyping] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const distanceFromBottom =
+      el.scrollHeight - el.scrollTop - el.clientHeight;
+    // Only auto-scroll if user is near the bottom (within 80px).
+    // Respects manual scroll-up to read earlier messages.
+    if (distanceFromBottom > 80) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+  }, [bubbles, kikoTyping]);
 
   useEffect(() => {
     let cancelled = false;
     const timers: ReturnType<typeof setTimeout>[] = [];
-    const after = (ms: number) =>
+    const wait = (ms: number) =>
       new Promise<void>((res) => {
         const t = setTimeout(() => res(), ms);
         timers.push(t);
       });
+    const push = (b: Bubble) =>
+      setBubbles((prev) => [...prev, b]);
 
     (async () => {
-      await after(900);
+      await wait(700);
       if (cancelled) return;
 
-      // Typing the URL
-      for (let i = 1; i <= USER_INPUT.length; i++) {
+      // 1. User typing URL
+      for (let i = 1; i <= USER_URL.length; i++) {
         if (cancelled) return;
-        setStep({ kind: "typing", text: USER_INPUT.slice(0, i) });
-        await after(48);
+        setTypingUrl(USER_URL.slice(0, i));
+        await wait(40);
       }
 
-      await after(450);
+      // 2. User sends URL
+      await wait(320);
       if (cancelled) return;
-      setStep({ kind: "user-sent", text: USER_INPUT });
+      setTypingUrl(null);
+      push({ kind: "user-url", key: "u-url" });
 
-      await after(750);
+      // 3. Kiko detects 3 items
+      await wait(450);
       if (cancelled) return;
-      setStep({ kind: "kiko-typing" });
+      setKikoTyping(true);
+      await wait(800);
+      if (cancelled) return;
+      setKikoTyping(false);
+      push({
+        kind: "kiko-text",
+        key: "k1",
+        body: (
+          <>
+            I see <b>3 items</b> in this photo 👀
+            <br />
+            <br />
+            1️⃣ Relaxed Linen Shirt
+            <br />
+            2️⃣ Wide-Leg Cotton Pants
+            <br />
+            3️⃣ Penny Loafers
+            <br />
+            <br />
+            Which one are you after?
+          </>
+        ),
+      });
 
-      for (let i = 0; i < KIKO_MESSAGES.length; i++) {
-        await after(i === 0 ? 1100 : 1200);
-        if (cancelled) return;
-        setStep({ kind: "kiko-msg", index: i });
-      }
+      // 4. User picks "1"
+      await wait(1100);
+      if (cancelled) return;
+      push({
+        kind: "user-chip",
+        key: "u-1",
+        emoji: "1️⃣",
+        label: "Relaxed Linen Shirt",
+      });
+
+      // 5. Kiko great pick + first card
+      await wait(380);
+      if (cancelled) return;
+      setKikoTyping(true);
+      await wait(700);
+      if (cancelled) return;
+      setKikoTyping(false);
+      if (cancelled) return;
+      push({
+        kind: "kiko-text",
+        key: "k2",
+        body: <>Great pick! Here&apos;s a match 👇</>,
+      });
+      await wait(280);
+      if (cancelled) return;
+      push({ kind: "kiko-card", key: "k-card-1", product: CARD_FIRST });
+
+      // 6. User clicks Cheaper
+      await wait(2800);
+      if (cancelled) return;
+      push({
+        kind: "user-chip",
+        key: "u-cheaper",
+        emoji: "💰",
+        label: "Cheaper",
+      });
+
+      // 7. Kiko cheaper + second card
+      await wait(380);
+      if (cancelled) return;
+      setKikoTyping(true);
+      await wait(750);
+      if (cancelled) return;
+      setKikoTyping(false);
+      if (cancelled) return;
+      push({
+        kind: "kiko-text",
+        key: "k3",
+        body: <>Found one for less 👇</>,
+      });
+      await wait(260);
+      if (cancelled) return;
+      push({ kind: "kiko-card", key: "k-card-2", product: CARD_SECOND });
+
+      // 8. User likes
+      await wait(2800);
+      if (cancelled) return;
+      push({
+        kind: "user-chip",
+        key: "u-like",
+        emoji: "♥",
+        label: "Like",
+      });
+
+      // 9. Kiko closing
+      await wait(380);
+      if (cancelled) return;
+      setKikoTyping(true);
+      await wait(700);
+      if (cancelled) return;
+      setKikoTyping(false);
+      if (cancelled) return;
+      push({
+        kind: "kiko-text",
+        key: "k4",
+        body: <>Saved! Learning your taste 🧶</>,
+      });
     })();
 
     return () => {
@@ -88,10 +204,6 @@ export function TelegramMockup() {
       timers.forEach(clearTimeout);
     };
   }, []);
-
-  const userSent = step.kind !== "idle" && step.kind !== "typing";
-  const kikoCount = step.kind === "kiko-msg" ? step.index + 1 : 0;
-  const inputText = step.kind === "typing" ? step.text : "";
 
   return (
     <div className="relative mx-auto w-full max-w-[380px]">
@@ -103,7 +215,7 @@ export function TelegramMockup() {
 
       {/* Phone frame */}
       <div className="overflow-hidden rounded-[36px] border border-white/10 bg-[#0e0e10] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6),0_0_0_1px_rgba(255,255,255,0.04)_inset]">
-        {/* Top bar (Telegram-ish) */}
+        {/* Top bar */}
         <div className="flex items-center gap-3 border-b border-white/5 bg-[#17212b] px-4 py-3">
           <ChevronLeft className="size-4 text-[#6ab4f0]" />
           <Image
@@ -127,39 +239,41 @@ export function TelegramMockup() {
 
         {/* Chat body */}
         <div
-          className="relative h-[460px] overflow-hidden px-3 py-4"
+          ref={scrollRef}
+          className="relative h-[540px] overflow-y-auto overscroll-contain px-3 py-4 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
           style={{
-            background:
-              "linear-gradient(180deg,#0e1621 0%,#11212f 100%)",
+            backgroundColor: "#11212f",
+            backgroundImage:
+              "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(180deg,#0e1621 0%,#11212f 100%)",
+            backgroundSize: "14px 14px, 100% 100%",
+            backgroundAttachment: "local, local",
           }}
         >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle, #fff 1px, transparent 1px)",
-              backgroundSize: "14px 14px",
-            }}
-          />
-
-          <div className="relative flex h-full flex-col justify-end gap-2">
-            {userSent && <UserBubble text={USER_INPUT} />}
-
-            {step.kind === "kiko-typing" && <KikoTyping />}
-
-            {KIKO_MESSAGES.slice(0, kikoCount).map((m) => (
-              <KikoBubble key={m.key}>{m.body}</KikoBubble>
-            ))}
+          <div className="flex min-h-full flex-col justify-end gap-2">
+            {bubbles.map((b) => {
+              if (b.kind === "user-url") {
+                return <UserUrlBubble key={b.key} />;
+              }
+              if (b.kind === "user-chip") {
+                return (
+                  <UserChip key={b.key} emoji={b.emoji} label={b.label} />
+                );
+              }
+              if (b.kind === "kiko-text") {
+                return <KikoBubble key={b.key}>{b.body}</KikoBubble>;
+              }
+              return <KikoCard key={b.key} product={b.product} />;
+            })}
+            {kikoTyping && <KikoTyping />}
           </div>
         </div>
 
         {/* Input bar */}
         <div className="flex items-center gap-2 border-t border-white/5 bg-[#17212b] px-3 py-2.5">
           <div className="flex-1 rounded-full bg-[#242f3d] px-4 py-2 text-[13px] text-white/80">
-            {inputText ? (
+            {typingUrl ? (
               <>
-                <span className="text-white">{inputText}</span>
+                <span className="text-white">{typingUrl}</span>
                 <span
                   aria-hidden
                   className="ml-0.5 inline-block h-3.5 w-[1.5px] -translate-y-px bg-[#F5A623] align-middle"
@@ -191,19 +305,40 @@ export function TelegramMockup() {
           0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
           30% { transform: translateY(-2px); opacity: 1; }
         }
+        @keyframes btnPulse {
+          0%   { background-color: rgba(36,47,61,1); box-shadow: 0 0 0 0 rgba(245,166,35,0.0); }
+          30%  { background-color: rgba(245,166,35,0.18); box-shadow: 0 0 0 4px rgba(245,166,35,0.18); }
+          100% { background-color: rgba(36,47,61,1); box-shadow: 0 0 0 0 rgba(245,166,35,0.0); }
+        }
       `}</style>
     </div>
   );
 }
 
-function UserBubble({ text }: { text: string }) {
+function UserUrlBubble() {
   return (
     <div
       className="ml-auto max-w-[78%] rounded-[14px] rounded-br-sm bg-[#2b5278] px-3 py-2 text-[13.5px] text-white shadow-sm"
       style={{ animation: "bubbleIn .25s ease both" }}
     >
-      <span className="break-all">{text}</span>
+      <span className="break-all">{USER_URL}</span>
       <span className="ml-1.5 inline-flex items-center text-[10px] text-white/60">
+        12:34
+        <Check className="ml-0.5 size-3" />
+      </span>
+    </div>
+  );
+}
+
+function UserChip({ emoji, label }: { emoji: string; label: string }) {
+  return (
+    <div
+      className="ml-auto inline-flex max-w-[78%] items-center gap-1.5 whitespace-nowrap rounded-[14px] rounded-br-sm bg-[#2b5278] px-3 py-1.5 text-[13px] font-medium text-white shadow-sm"
+      style={{ animation: "bubbleIn .25s ease both" }}
+    >
+      <span aria-hidden>{emoji}</span>
+      <span>{label}</span>
+      <span className="ml-1 inline-flex items-center text-[10px] text-white/60">
         12:34
         <Check className="ml-0.5 size-3" />
       </span>
@@ -214,7 +349,7 @@ function UserBubble({ text }: { text: string }) {
 function KikoBubble({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className="max-w-[82%] rounded-[14px] rounded-bl-sm bg-[#182533] px-3.5 py-2.5 text-[13.5px] leading-snug text-white shadow-sm"
+      className="max-w-[88%] rounded-[14px] rounded-bl-sm bg-[#182533] px-3.5 py-2.5 text-[13.5px] leading-[1.45] text-white shadow-sm"
       style={{ animation: "bubbleIn .25s ease both" }}
     >
       {children}
@@ -228,13 +363,73 @@ function KikoTyping() {
       className="inline-flex w-fit items-center gap-1 rounded-[14px] rounded-bl-sm bg-[#182533] px-3.5 py-2.5"
       style={{ animation: "bubbleIn .25s ease both" }}
     >
-      {[0, 0.15, 0.3].map((d, i) => (
+      {TYPING_DELAYS.map((d) => (
         <span
-          key={i}
+          key={d}
           className="block size-1.5 rounded-full bg-white/60"
           style={{ animation: `typingDot 1.1s ${d}s infinite ease-in-out` }}
         />
       ))}
+    </div>
+  );
+}
+
+function KikoCard({ product }: { product: ProductCard }) {
+  return (
+    <div
+      className="w-[92%] overflow-hidden rounded-[14px] rounded-bl-sm bg-[#182533] shadow-sm"
+      style={{ animation: "bubbleIn .25s ease both", pointerEvents: "none" }}
+    >
+      {/* Product image */}
+      <div className="relative aspect-[4/3] overflow-hidden bg-[#0a1420]">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          sizes="(max-width: 380px) 100vw, 380px"
+          className="object-cover"
+        />
+      </div>
+
+      {/* Info */}
+      <div className="space-y-0.5 px-3.5 pt-3">
+        <div className="text-[14px] font-bold tracking-[-0.01em] text-white">
+          {product.name}
+        </div>
+        <div className="text-[12px] text-white/55">{product.brand}</div>
+        <div className="mt-1.5 flex items-center justify-between">
+          <div className="inline-flex items-center gap-1.5 text-[13.5px] font-semibold text-[#F5A623]">
+            <span aria-hidden>💰</span>
+            <span>{product.price}</span>
+          </div>
+          <div className="inline-flex items-center gap-1 text-[11.5px] text-white/55">
+            <span aria-hidden>🏬</span>
+            <span>{product.store}</span>
+          </div>
+        </div>
+        <div className="pt-0.5 text-[10px] text-white/35">12:34</div>
+      </div>
+
+      {/* Inline keyboard */}
+      <div className="grid grid-cols-2 gap-1 px-1.5 pb-1.5">
+        {CARD_BUTTONS.map((b) => {
+          const accent = b.match === product.highlight;
+          return (
+            <div
+              key={b.label}
+              className="flex items-center justify-center gap-1 rounded-md bg-[#242f3d] py-2 text-[12px] font-medium text-white/90"
+              style={
+                accent
+                  ? { animation: "btnPulse 1.2s ease 0.8s 1 both" }
+                  : undefined
+              }
+            >
+              <span aria-hidden>{b.emoji}</span>
+              <span>{b.label}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
