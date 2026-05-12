@@ -90,15 +90,8 @@ export function TelegramMockup() {
   }, []);
 
   const userSent = step.kind !== "idle" && step.kind !== "typing";
-  const kikoVisible =
-    step.kind === "kiko-typing" || step.kind === "kiko-msg";
   const kikoCount = step.kind === "kiko-msg" ? step.index + 1 : 0;
-  const inputText =
-    step.kind === "typing"
-      ? step.text
-      : step.kind === "idle"
-      ? ""
-      : "";
+  const inputText = step.kind === "typing" ? step.text : "";
 
   return (
     <div className="relative mx-auto w-full max-w-[380px]">
@@ -151,11 +144,9 @@ export function TelegramMockup() {
           />
 
           <div className="relative flex h-full flex-col justify-end gap-2">
-            {userSent && (
-              <UserBubble text={(step as { text: string }).text} />
-            )}
+            {userSent && <UserBubble text={USER_INPUT} />}
 
-            {kikoVisible && step.kind === "kiko-typing" && <KikoTyping />}
+            {step.kind === "kiko-typing" && <KikoTyping />}
 
             {KIKO_MESSAGES.slice(0, kikoCount).map((m) => (
               <KikoBubble key={m.key}>{m.body}</KikoBubble>

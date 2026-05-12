@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   MessageSquare,
@@ -19,10 +19,15 @@ export function ConnectModal({
   onClose: () => void;
 }) {
   const [tab, setTab] = useState<ConnectTab>(initialTab);
+  const onCloseRef = useRef(onClose);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  });
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") onCloseRef.current();
     };
     window.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
@@ -31,7 +36,7 @@ export function ConnectModal({
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
     };
-  }, [onClose]);
+  }, []);
 
   return (
     <div
@@ -163,7 +168,10 @@ function SmsPanel() {
         Coming soon
       </div>
 
-      <h2 className="mt-4 text-center text-[22px] font-extrabold tracking-[-0.02em] text-white">
+      <h2
+        id="connect-title"
+        className="mt-4 text-center text-[22px] font-extrabold tracking-[-0.02em] text-white"
+      >
         iMessage support is on the way.
       </h2>
       <p className="mx-auto mt-3 max-w-[340px] text-center text-[13.5px] leading-relaxed text-white/55">

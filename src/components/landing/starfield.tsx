@@ -27,6 +27,7 @@ export function Starfield() {
       Math.random() * (max - min) + min;
 
     const init = () => {
+      cancelAnimationFrame(raf);
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       const count = Math.floor((canvas.width * canvas.height) / 1800);
@@ -43,6 +44,7 @@ export function Starfield() {
           dir: Math.random() > 0.5 ? 1 : -1,
         };
       });
+      raf = requestAnimationFrame(draw);
     };
 
     const draw = () => {
@@ -60,7 +62,6 @@ export function Starfield() {
     };
 
     init();
-    draw();
     window.addEventListener("resize", init);
 
     return () => {

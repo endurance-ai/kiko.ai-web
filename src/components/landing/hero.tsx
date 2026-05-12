@@ -26,13 +26,7 @@ export function Hero() {
               No app. Just text.
             </span>
 
-            <h1
-              className="mt-6 text-[clamp(48px,8vw,92px)] font-extrabold leading-[0.98] tracking-[-0.04em]"
-              style={{
-                fontFamily:
-                  "Helvetica, 'Helvetica Neue', Arial, sans-serif",
-              }}
-            >
+            <h1 className="mt-6 text-[clamp(48px,8vw,92px)] font-extrabold leading-[0.98] tracking-[-0.04em]">
               Stop browsing.
               <br />
               Ask{" "}

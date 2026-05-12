@@ -29,15 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="antialiased">
-      <body
-        className="bg-black text-white"
-        style={{
-          fontFamily:
-            "Helvetica, 'Helvetica Neue', Arial, sans-serif",
-        }}
-      >
-        {children}
-      </body>
+      <body className="bg-black font-sans text-white">{children}</body>
     </html>
   );
 }

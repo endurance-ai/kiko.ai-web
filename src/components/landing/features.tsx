@@ -63,13 +63,7 @@ export function Features() {
             <span className="size-1.5 rounded-full bg-[#F5A623]" />
             What kiko does
           </span>
-          <h2
-            className="mt-5 text-[clamp(32px,5vw,52px)] font-extrabold leading-[1.02] tracking-[-0.03em] text-white"
-            style={{
-              fontFamily:
-                "Helvetica, 'Helvetica Neue', Arial, sans-serif",
-            }}
-          >
+          <h2 className="mt-5 text-[clamp(32px,5vw,52px)] font-extrabold leading-[1.02] tracking-[-0.03em] text-white">
             One thread. Every shopping habit handled.
           </h2>
           <p className="mt-4 max-w-[520px] text-[15px] leading-relaxed text-white/55 lg:text-[16px]">
@@ -105,12 +99,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
         <Icon className="size-[18px]" strokeWidth={1.6} />
       </div>
 
-      <h3
-        className="mt-5 text-[17px] font-bold leading-snug tracking-[-0.02em] text-white"
-        style={{
-          fontFamily: "Helvetica, 'Helvetica Neue', Arial, sans-serif",
-        }}
-      >
+      <h3 className="mt-5 text-[17px] font-bold leading-snug tracking-[-0.02em] text-white">
         {feature.title}
       </h3>
       <p className="mt-2 text-[13.5px] leading-[1.55] text-white/55">
