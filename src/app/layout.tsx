@@ -5,12 +5,12 @@ export const metadata: Metadata = {
   title: "kiko.ai — Stop browsing. Ask kiko.ai",
   description:
     "Send any Pinterest, Instagram, or product link to kiko on Telegram or iMessage. Get the cheaper alternative in 30 seconds.",
-  metadataBase: new URL("https://kiko.ai"),
+  metadataBase: new URL("https://kikoai.me"),
   openGraph: {
     title: "kiko.ai — Stop browsing. Ask kiko.ai",
     description:
       "Send any link to kiko on Telegram or iMessage. Get the cheaper alternative in 30 seconds.",
-    url: "https://kiko.ai",
+    url: "https://kikoai.me",
     siteName: "kiko.ai",
     type: "website",
   },
