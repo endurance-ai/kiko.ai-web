@@ -19,7 +19,7 @@ export function ConnectModal({
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="relative w-full max-w-[440px] overflow-hidden rounded-3xl border border-white/10 bg-[#0e0e10] p-0 text-white ring-0 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] sm:max-w-[440px]">
+      <DialogContent className="w-full max-w-[440px] overflow-hidden rounded-3xl border border-white/10 bg-[#0e0e10] p-0 text-white ring-0 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] sm:max-w-[440px]">
         <div
           aria-hidden
           className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-[radial-gradient(circle,rgba(245,166,35,0.18),transparent_70%)] blur-2xl"
