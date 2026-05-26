@@ -1,23 +1,26 @@
-import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import {ImageResponse} from "next/og";
+import {readFile} from "node:fs/promises";
+import {join} from "node:path";
 
-export const alt = "kiko.ai — Stop browsing. Ask kiko.ai";
-export const size = { width: 1200, height: 630 };
+export const alt = "kiko.ai — Stop browsing. Ask kiko.";
+export const size = {width: 1200, height: 630};
 export const contentType = "image/png";
-
-const KIKO_GRADIENT =
-  "linear-gradient(105deg,#8B1A00 0%,#D43A1A 25%,#E8622A 50%,#D43A1A 75%,#8B1A00 100%)";
 
 async function loadFont(file: string) {
   return readFile(join(process.cwd(), "public/fonts", file));
 }
 
+async function loadImageDataUrl(file: string, mime: string) {
+  const buf = await readFile(join(process.cwd(), "public", file));
+  return `data:${mime};base64,${buf.toString("base64")}`;
+}
+
 export default async function OG() {
-  const [regular, semibold, black] = await Promise.all([
+  const [regular, semibold, black, cat] = await Promise.all([
     loadFont("inter-tight-400.woff"),
     loadFont("inter-tight-600.woff"),
     loadFont("inter-tight-900.woff"),
+    loadImageDataUrl("kiko-cat.png", "image/png"),
   ]);
 
   return new ImageResponse(
@@ -29,98 +32,48 @@ export default async function OG() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "70px 84px",
-          background: "#000",
-          color: "#fff",
+          padding: "72px 80px",
+          background: "#F0F0F2",
+          color: "#0D0D0D",
           fontFamily: "Inter Tight",
+          position: "relative",
         }}
       >
-        {/* Subtle starfield — static SVG dots */}
-        <div
+        {/* Cat — top right, sized so it sits beside the headline without overlap */}
+        <img
+          src={cat}
+          alt=""
+          width={300}
+          height={300}
           style={{
-            display: "flex",
             position: "absolute",
-            inset: 0,
-            opacity: 0.5,
+            top: 56,
+            right: 64,
+            width: 300,
+            height: 300,
+            objectFit: "contain",
+            objectPosition: "top right",
           }}
-        >
-          <svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
-            {Array.from({ length: 90 }).map((_, i) => {
-              const x = (i * 137.5) % 1200;
-              const y = (i * 89.3) % 630;
-              const r = i % 11 === 0 ? 1.6 : i % 5 === 0 ? 1.1 : 0.6;
-              const a = i % 11 === 0 ? 0.9 : i % 5 === 0 ? 0.6 : 0.3;
-              return (
-                <circle
-                  key={i}
-                  cx={x}
-                  cy={y}
-                  r={r}
-                  fill={`rgba(255,255,255,${a})`}
-                />
-              );
-            })}
-          </svg>
-        </div>
+        />
 
-        {/* Pill — NO APP. JUST TEXT. */}
-        <div
-          style={{
-            display: "flex",
-            alignSelf: "flex-start",
-            alignItems: "center",
-            gap: 12,
-            padding: "8px 18px",
-            borderRadius: 9999,
-            border: "1px solid rgba(255,255,255,0.12)",
-            background: "rgba(255,255,255,0.04)",
-            fontSize: 20,
-            letterSpacing: 3,
-            textTransform: "uppercase",
-            color: "rgba(255,255,255,0.7)",
-            fontWeight: 600,
-          }}
-        >
-          <div
-            style={{
-              width: 8,
-              height: 8,
-              borderRadius: 9999,
-              background: "#F5A623",
-            }}
-          />
-          NO APP. JUST TEXT.
-        </div>
-
-        {/* Headline */}
+        {/* Headline — stacked */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            fontSize: 156,
-            lineHeight: 0.98,
-            letterSpacing: -7,
+            fontSize: 132,
+            lineHeight: 0.94,
+            letterSpacing: -6,
             fontWeight: 900,
           }}
         >
-          <span style={{ display: "flex" }}>Stop browsing.</span>
-          <span style={{ display: "flex" }}>
-            Ask&nbsp;
-            <span
-              style={{
-                display: "flex",
-                backgroundImage: KIKO_GRADIENT,
-                backgroundClip: "text",
-                color: "transparent",
-              }}
-            >
-              kiko.ai
-            </span>
-            <span>.</span>
+          <span style={{display: "flex"}}>Stop browsing.</span>
+          <span style={{display: "flex", color: "rgba(13,13,13,0.3)"}}>
+            Ask kiko.
           </span>
         </div>
 
-        {/* Description + handle */}
+        {/* Bottom row — description + CTA */}
         <div
           style={{
             display: "flex",
@@ -132,29 +85,50 @@ export default async function OG() {
           <div
             style={{
               display: "flex",
-              fontSize: 26,
-              lineHeight: 1.45,
-              color: "rgba(255,255,255,0.6)",
-              maxWidth: 760,
-              fontWeight: 400,
+              flexDirection: "column",
+              gap: 14,
+              maxWidth: 720,
             }}
           >
-            Drop a Pinterest or product link into Telegram. kiko finds it
-            cheaper — usually in under 30 seconds.
+            <div
+              style={{
+                display: "flex",
+                fontSize: 30,
+                lineHeight: 1.35,
+                color: "rgba(13,13,13,0.65)",
+                fontWeight: 400,
+              }}
+            >
+              Drop any link. Kiko finds a piece with the same vibe — for less.
+            </div>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 20,
+                fontWeight: 600,
+                color: "rgba(13,13,13,0.4)",
+              }}
+            >
+              kikoai.me
+            </div>
           </div>
+
           <div
             style={{
               display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-end",
-              gap: 6,
-              fontSize: 20,
+              alignItems: "center",
+              flexShrink: 0,
+              padding: "20px 36px",
+              borderRadius: 9999,
+              background: "#0D0D0D",
+              color: "#FFFFFF",
+              fontSize: 28,
+              fontWeight: 700,
+              letterSpacing: -0.5,
+              whiteSpace: "nowrap",
             }}
           >
-            <span style={{ color: "rgba(255,255,255,0.4)" }}>kikoai.me</span>
-            <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>
-              @kiko_fashion_ai_bot
-            </span>
+            <span style={{display: "flex"}}>Join the waitlist&nbsp;&nbsp;→</span>
           </div>
         </div>
       </div>
@@ -162,10 +136,10 @@ export default async function OG() {
     {
       ...size,
       fonts: [
-        { name: "Inter Tight", data: regular, weight: 400, style: "normal" },
-        { name: "Inter Tight", data: semibold, weight: 600, style: "normal" },
-        { name: "Inter Tight", data: black, weight: 900, style: "normal" },
+        {name: "Inter Tight", data: regular, weight: 400, style: "normal"},
+        {name: "Inter Tight", data: semibold, weight: 600, style: "normal"},
+        {name: "Inter Tight", data: black, weight: 900, style: "normal"},
       ],
-    },
+    }
   );
 }
