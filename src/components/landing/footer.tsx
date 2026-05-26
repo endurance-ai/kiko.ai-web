@@ -10,15 +10,12 @@ export function Footer() {
     >
       <div className="mx-auto flex w-full max-w-[720px] flex-wrap items-center justify-between gap-3">
         <span>© {new Date().getFullYear()} kiko.ai</span>
-        <a
-          href="https://t.me/kiko_fashion_ai_bot"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-semibold transition-opacity hover:opacity-70"
+        <span
+          className="font-semibold"
           style={{color: "rgba(13,13,13,0.55)"}}
         >
           @kiko_fashion_ai_bot
-        </a>
+        </span>
       </div>
     </footer>
   );
