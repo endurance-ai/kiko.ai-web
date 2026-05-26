@@ -6,23 +6,23 @@ type Feature = {
 
 const FEATURES: Feature[] = [
   {
-    title: "Same vibe, cheaper.",
-    body: "Original price, the cheaper alternative, and how much you saved — every single time. Not exact-match detection, real taste-match shopping.",
+    title: "Same outfit, cheaper.",
+    body: "Original designer piece, the high-street alternative, and how much you saved — every reply. Real taste-match shopping, not exact-product detection.",
     color: "#E8E2D0",
   },
   {
     title: "No app. Just text.",
-    body: "Kiko lives inside iMessage and Telegram. Nothing to install, nothing to learn. It's a conversation, not a dashboard.",
+    body: "Kiko lives inside iMessage and Telegram. Nothing to install, nothing to learn. It's a conversation with your fashion-savvy friend, not another shopping app.",
     color: "#A8E0B0",
   },
   {
-    title: "Any link, any photo.",
-    body: "Pinterest, Instagram, TikTok, blogs, screenshots, product pages, even a stranger's outfit on the street. If it's wearable, Kiko will find it.",
+    title: "Any fashion link, any photo.",
+    body: "Pinterest outfits, Instagram fits, TikTok hauls, blog posts, product pages, screenshots, even a stranger's outfit on the street. If it's wearable, Kiko finds it.",
     color: "#C9D8E2",
   },
   {
     title: "Knows your fit.",
-    body: "Tell Kiko your sizes, favorite brands, and the styles you live in — once. Every reply gets sharper from there.",
+    body: "Tell Kiko your sizes, favorite brands, and the styles you live in — once. Every recommendation gets sharper, more you, from there.",
     color: "#F0E0D0",
   },
 ];

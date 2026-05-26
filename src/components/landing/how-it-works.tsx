@@ -7,18 +7,18 @@ type Step = {
 const STEPS: Step[] = [
   {
     num: "01",
-    title: "Drop a link.",
-    body: "Pinterest, Instagram, TikTok, a screenshot, or any product page. Even a photo of someone on the street works.",
+    title: "Drop a fashion link.",
+    body: "A Pinterest outfit, an Instagram fit, a TikTok haul, a screenshot of a bag you saved, even a stranger's outfit on the street. If it's wearable, Kiko reads it.",
   },
   {
     num: "02",
-    title: "Kiko hunts.",
-    body: "She reads the image, identifies the look, and scans the web for the same vibe — usually finding 8 alternatives in about 30 seconds.",
+    title: "Kiko hunts the closet.",
+    body: "She IDs each piece — the silhouette, the brand, the cut — and scans the web for the same look at lower prices. Usually 8 alternatives in about 30 seconds.",
   },
   {
     num: "03",
     title: "Buy in chat.",
-    body: "Tap to checkout. No tab juggling, no price-comparison rabbit holes. Kiko learns your taste with every reply.",
+    body: "Tap to checkout the cheaper match. No tab juggling, no price-comparison rabbit holes. Kiko learns your taste, sizes, and brands as you go.",
   },
 ];
 
