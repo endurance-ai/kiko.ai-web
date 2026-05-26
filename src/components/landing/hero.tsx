@@ -39,9 +39,10 @@ export function Hero() {
             letterSpacing: "-0.005em",
           }}
         >
-          Drop any link — Pinterest, Instagram, TikTok, a screenshot, a product
-          page. Kiko finds a piece with the same vibe, usually cheaper,
-          delivered to your chat in about 30 seconds.
+          Kiko is your fashion-hunting cat. Drop a Pinterest outfit, an
+          Instagram fit, a TikTok haul, or a product page — she finds the same
+          look in clothes you can actually afford, delivered to your chat in
+          about 30 seconds.
         </p>
 
         {/* Primary CTAs — directly under headline so they're visible above the fold */}
