@@ -23,19 +23,24 @@
     "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* Reset must live INSIDE @layer base so Tailwind utilities (e.g. mx-auto)
+   in @layer utilities win the cascade. Plain (unlayered) rules outrank
+   layered rules, which silently breaks centering. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-html,
-body {
-  width: 100%;
-  background: var(--color-page);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  letter-spacing: -0.005em;
+  html,
+  body {
+    width: 100%;
+    background: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.005em;
+  }
 }
