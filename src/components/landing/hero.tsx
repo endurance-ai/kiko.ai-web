@@ -1,87 +1,90 @@
 "use client";
 
-import {useState} from "react";
-import {MessagesSquare, Send} from "lucide-react";
-import {TelegramMockup} from "./telegram-mockup";
-import {ConnectModal, type ConnectTab} from "./connect-modal";
+import Image from "next/image";
+import {ChatPreview} from "./chat-preview";
 
 export function Hero() {
-  const [modal, setModal] = useState<{ open: boolean; tab: ConnectTab }>({
-    open: false,
-    tab: "telegram",
-  });
-
-  const openModal = (tab: ConnectTab) => setModal({ open: true, tab });
-  const onOpenChange = (open: boolean) => setModal((s) => ({ ...s, open }));
-  const onTabChange = (tab: ConnectTab) => setModal((s) => ({ ...s, tab }));
-
   return (
-    <section className="relative z-10 flex min-h-screen flex-col">
-      {/* Hero grid */}
-      <div className="flex flex-1 items-center px-6 py-10 lg:px-10 lg:py-0">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
-          {/* Left — copy */}
-          <div className="max-w-[680px]">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-white/70">
-              <span className="size-1.5 rounded-full bg-[#F5A623]" />
-              No app. Just text.
+    <section className="px-5 pt-8 pb-14 sm:px-6 sm:pt-12 sm:pb-20">
+      <div className="mx-auto w-full max-w-[720px]">
+        {/* Headline + cat — stack on mobile, inline on sm+ */}
+        <div className="flex flex-col items-start sm:flex-row sm:items-end sm:gap-0">
+          <h1
+            className="font-bold leading-[0.95] tracking-[-0.035em] sm:shrink-0"
+            style={{fontSize: "clamp(2.4rem, 9vw, 4.8rem)"}}
+          >
+            Stop browsing.
+            <br />
+            <span style={{color: "rgba(13,13,13,0.3)"}}>Ask kiko.</span>
+          </h1>
+          <Image
+            src="/kiko-cat.png"
+            alt="Kiko"
+            width={320}
+            height={320}
+            priority
+            className="-mt-3 ml-auto block w-auto shrink-0 object-contain object-bottom sm:mt-0 sm:ml-[-8px]"
+            style={{
+              height: "calc(clamp(2.4rem, 9vw, 4.8rem) * 0.95 * 2)",
+            }}
+          />
+        </div>
+
+        <p
+          className="mt-6 max-w-[540px]"
+          style={{
+            color: "rgba(13,13,13,0.65)",
+            fontSize: "1.05rem",
+            lineHeight: 1.5,
+            letterSpacing: "-0.005em",
+          }}
+        >
+          Drop any link — Pinterest, Instagram, TikTok, a screenshot, a product
+          page. Kiko finds a piece with the same vibe, usually cheaper,
+          delivered to your chat in about 30 seconds.
+        </p>
+
+        {/* Primary CTAs — directly under headline so they're visible above the fold */}
+        <div className="mt-7 flex flex-wrap gap-2.5">
+          <a
+            href="#waitlist"
+            className="inline-flex items-center justify-center gap-2 font-bold transition-transform duration-150 ease-out hover:-translate-y-0.5"
+            style={{
+              background: "#0D0D0D",
+              color: "#FFFFFF",
+              fontSize: "1.05rem",
+              letterSpacing: "-0.015em",
+              padding: "16px 26px",
+              borderRadius: "999px",
+              boxShadow: "0 8px 20px rgba(13,13,13,0.18)",
+            }}
+          >
+            Join the waitlist
+            <span aria-hidden style={{fontSize: "1.2rem", lineHeight: 1}}>
+              →
             </span>
+          </a>
+          <a
+            href="#how"
+            className="inline-flex items-center justify-center font-bold transition-colors"
+            style={{
+              background: "rgba(13,13,13,0.05)",
+              color: "#0D0D0D",
+              fontSize: "1.05rem",
+              letterSpacing: "-0.015em",
+              padding: "16px 24px",
+              borderRadius: "999px",
+            }}
+          >
+            How it works
+          </a>
+        </div>
 
-            <h1 className="mt-6 text-[clamp(48px,8vw,92px)] font-extrabold leading-[0.98] tracking-[-0.04em]">
-              Stop browsing.
-              <br />
-              Ask{" "}
-              <span
-                className="bg-clip-text text-transparent animate-kiko-shimmer"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(105deg,#8B1A00 0%,#D43A1A 15%,#E8622A 28%,#F5A623 40%,#E8622A 52%,#D43A1A 63%,#F5A623 74%,#E8622A 84%,#8B1A00 100%)",
-                  backgroundSize: "500% 500%",
-                }}
-              >
-                kiko.ai
-              </span>
-              .
-            </h1>
-
-            <p className="mt-7 max-w-[480px] text-[16px] leading-[1.6] text-white/65 lg:text-[17px]">
-              Drop a Pinterest, Instagram, or product link into Telegram or
-              iMessage. kiko finds it cheaper — usually in under 30 seconds.
-            </p>
-
-            <div className="mt-8 inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/[0.04] p-1">
-              <button
-                type="button"
-                onClick={() => openModal("sms")}
-                className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[13.5px] font-semibold text-white/70 transition-colors hover:bg-white/[0.05] hover:text-white"
-              >
-                <MessagesSquare className="size-3.5" />
-                iMessage
-              </button>
-              <button
-                type="button"
-                onClick={() => openModal("telegram")}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-[13.5px] font-semibold text-black transition-transform hover:-translate-y-[1px]"
-              >
-                <Send className="size-3.5" />
-                Telegram
-              </button>
-            </div>
-          </div>
-
-          {/* Right — Telegram mockup */}
-          <div className="flex justify-center lg:justify-end">
-            <TelegramMockup />
-          </div>
+        {/* Chat preview — full container width, auto-cycles iMessage ↔ Telegram */}
+        <div className="mt-10">
+          <ChatPreview size="lg" />
         </div>
       </div>
-
-      <ConnectModal
-        open={modal.open}
-        onOpenChange={onOpenChange}
-        tab={modal.tab}
-        onTabChange={onTabChange}
-      />
     </section>
   );
 }
