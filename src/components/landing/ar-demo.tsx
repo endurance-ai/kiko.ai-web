@@ -655,21 +655,21 @@ function CornerBrackets() {
   return (
     <>
       {[
-        {top: 14, left: 14, rotate: 0},
-        {top: 14, right: 14, rotate: 90},
-        {bottom: 14, right: 14, rotate: 180},
-        {bottom: 14, left: 14, rotate: 270},
-      ].map((p, i) => (
+        {top: 14, left: 14, deg: 0},
+        {top: 14, right: 14, deg: 90},
+        {bottom: 14, right: 14, deg: 180},
+        {bottom: 14, left: 14, deg: 270},
+      ].map(({deg, ...pos}, i) => (
         <div
           key={i}
           style={{
             position: "absolute",
-            ...p,
+            ...pos,
             width: 18,
             height: 18,
             borderTop: "1px solid rgba(180,200,230,0.55)",
             borderLeft: "1px solid rgba(180,200,230,0.55)",
-            transform: `rotate(${p.rotate}deg)`,
+            transform: `rotate(${deg}deg)`,
           }}
         />
       ))}
