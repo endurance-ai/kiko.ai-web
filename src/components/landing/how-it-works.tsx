@@ -1,24 +1,46 @@
+import type {ReactNode} from "react";
+
 type Step = {
   num: string;
   title: string;
-  body: string;
+  body: ReactNode;
 };
+
+const B = ({children}: {children: ReactNode}) => (
+  <strong style={{color: "#0D0D0D", fontWeight: 700}}>{children}</strong>
+);
 
 const STEPS: Step[] = [
   {
     num: "01",
-    title: "Drop a fashion link.",
-    body: "A Pinterest outfit, an Instagram fit, a TikTok haul, a screenshot of a bag you saved, even a stranger's outfit on the street. If it's wearable, Kiko reads it.",
+    title: "패션 링크를 보내세요.",
+    body: (
+      <>
+        핀터레스트 무드보드, 인스타그램 피드, 사진 한 장 —{" "}
+        <B>뭐든 괜찮아요.</B>{" "}
+        입을 수 있는 것이라면 Kiko가 읽어냅니다.
+      </>
+    ),
   },
   {
     num: "02",
-    title: "Kiko hunts the closet.",
-    body: "She IDs each piece — the silhouette, the brand, the cut — and scans the web for the same look at lower prices. Usually 8 alternatives in about 30 seconds.",
+    title: "Kiko가 옷장을 뒤집니다.",
+    body: (
+      <>
+        핀터레스트에서 본 무드를 실제 살 수 있는 옷으로 바꾸는 데 <B>평균 30초</B>.
+        원하는 만큼 즉시 무제한 디깅 — 당신이 만족할 때까지 멈추지 않아요.
+      </>
+    ),
   },
   {
     num: "03",
-    title: "Buy in chat.",
-    body: "Tap to checkout the cheaper match. No tab juggling, no price-comparison rabbit holes. Kiko learns your taste, sizes, and brands as you go.",
+    title: "마음에 드는 옷이 없나요? 걱정 마세요.",
+    body: (
+      <>
+        키코와 대화하면서 계속 옷을 탐색하세요.
+        베타 이용자의 <B>86%</B>가 원하는 옷을 찾아 구매까지 이어졌습니다.
+      </>
+    ),
   },
 ];
 
@@ -34,9 +56,22 @@ export function HowItWorks() {
           className="mb-8 font-bold leading-[0.98] tracking-[-0.03em]"
           style={{fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)"}}
         >
-          How it works
+          모든 SNS 링크를 공유하세요.
           <br />
-          <span style={{color: "rgba(13,13,13,0.3)"}}>in three steps</span>
+          <span style={{color: "rgba(13,13,13,0.3)"}}>동일 감도, 더 나은 가격</span>
+        </div>
+
+        {/* Visual showcase */}
+        <div
+          className="mb-3 overflow-hidden"
+          style={{borderRadius: "20px"}}
+        >
+          <img
+            src="/showcase-v2.png"
+            alt="핀터레스트 이미지가 실제 상품으로"
+            className="w-full block"
+            style={{objectFit: "cover"}}
+          />
         </div>
 
         <ol className="flex flex-col gap-3">
