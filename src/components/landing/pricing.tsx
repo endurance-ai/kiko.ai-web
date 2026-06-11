@@ -25,7 +25,7 @@ const PLANS: Plan[] = [
       "iMessage · Telegram",
       "기본 취향 프로필",
     ],
-    cta: "Waitlist 등록",
+    cta: "Get started",
     style: "white",
     paid: false,
   },
@@ -107,9 +107,11 @@ const STYLES: Record<Plan["style"], CardStyle> = {
 export function Pricing() {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
+  const TELEGRAM_URL = "https://t.me/kiko_fashion_ai_bot";
+
   const handleCta = (plan: Plan) => {
     if (!plan.paid) {
-      document.getElementById("waitlist")?.scrollIntoView({behavior: "smooth"});
+      window.open(TELEGRAM_URL, "_blank");
       return;
     }
     setSelectedPlan(plan.name);
@@ -217,12 +219,7 @@ export function Pricing() {
 }
 
 function FakeDoorModal({planName, onClose}: {planName: string; onClose: () => void}) {
-  const handleWaitlist = () => {
-    onClose();
-    setTimeout(() => {
-      document.getElementById("waitlist")?.scrollIntoView({behavior: "smooth"});
-    }, 150);
-  };
+  const TELEGRAM_URL = "https://t.me/kiko_fashion_ai_bot";
 
   return (
     <div
@@ -248,25 +245,27 @@ function FakeDoorModal({planName, onClose}: {planName: string; onClose: () => vo
           className="mb-6"
           style={{fontSize: "0.9rem", color: "rgba(13,13,13,0.55)", lineHeight: 1.6, letterSpacing: "-0.005em"}}
         >
-          <span className="font-semibold" style={{color: "#0D0D0D"}}>{planName}</span> 플랜에 관심 가져주셔서 감사해요. 베타 오픈과 함께 결제 기능도 함께 열릴 예정이에요. Waitlist에 등록하시면 가장 먼저 알려드릴게요.
+          <span className="font-semibold" style={{color: "#0D0D0D"}}>{planName}</span> 플랜에 관심 가져주셔서 감사해요. 지금은 텔레그램 베타로 먼저 시작해보세요!
         </div>
 
-        <button
-          onClick={handleWaitlist}
-          className="w-full py-3.5 font-bold transition-transform duration-150 hover:-translate-y-0.5"
+        <a
+          href={TELEGRAM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onClose}
+          className="w-full py-3.5 font-bold transition-transform duration-150 hover:-translate-y-0.5 flex items-center justify-center"
           style={{
             background: "#0D0D0D",
             color: "#FFFFFF",
             borderRadius: "12px",
-            border: "none",
-            cursor: "pointer",
             fontSize: "0.92rem",
             letterSpacing: "-0.01em",
             marginBottom: "8px",
+            textDecoration: "none",
           }}
         >
-          Waitlist 등록하기 →
-        </button>
+          텔레그램에서 시작하기 →
+        </a>
 
         <button
           onClick={onClose}

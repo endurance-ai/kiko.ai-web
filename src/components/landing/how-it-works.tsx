@@ -65,10 +65,9 @@ export function HowItWorks() {
           style={{borderRadius: "20px"}}
         >
           <img
-            src="/showcase-v2.png"
+            src="/showcase-v3.png"
             alt="핀터레스트 이미지가 실제 상품으로"
             className="w-full block"
-            style={{objectFit: "cover", maxHeight: "220px"}}
           />
         </div>
 
