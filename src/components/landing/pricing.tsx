@@ -117,11 +117,11 @@ export function Pricing() {
 
   return (
     <>
-      <section id="pricing" className="px-5 py-16 sm:px-6 sm:py-20" style={{background: "#F0F0F2"}}>
+      <section id="pricing" className="px-5 py-10 sm:px-6 sm:py-20" style={{background: "#F0F0F2"}}>
         <div className="mx-auto w-full max-w-[720px]">
           <div
-            className="mb-8 font-bold leading-[0.98] tracking-[-0.03em]"
-            style={{fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)"}}
+            className="mb-5 sm:mb-8 font-bold leading-[0.98] tracking-[-0.03em]"
+            style={{fontSize: "clamp(1.5rem, 3.5vw, 2.4rem)"}}
           >
             심플한 가격
             <br />

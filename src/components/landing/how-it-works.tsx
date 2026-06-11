@@ -17,8 +17,7 @@ const STEPS: Step[] = [
     body: (
       <>
         핀터레스트 무드보드, 인스타그램 피드, 사진 한 장 —{" "}
-        <B>뭐든 괜찮아요.</B>{" "}
-        입을 수 있는 것이라면 Kiko가 읽어냅니다.
+        <B>뭐든 괜찮아요.</B>
       </>
     ),
   },
@@ -27,8 +26,7 @@ const STEPS: Step[] = [
     title: "Kiko가 옷장을 뒤집니다.",
     body: (
       <>
-        핀터레스트에서 본 무드를 실제 살 수 있는 옷으로 바꾸는 데 <B>평균 30초</B>.
-        원하는 만큼 즉시 무제한 디깅 — 당신이 만족할 때까지 멈추지 않아요.
+        키코와 함께 원하는 만큼 즉시 디깅하세요. 당신이 만족할 때까지 멈추지 않아요.
       </>
     ),
   },
@@ -48,13 +46,13 @@ export function HowItWorks() {
   return (
     <section
       id="how"
-      className="px-5 py-16 sm:px-6 sm:py-20"
+      className="px-5 py-10 sm:px-6 sm:py-20"
       style={{background: "#E8E2D0"}}
     >
       <div className="mx-auto w-full max-w-[720px]">
         <div
-          className="mb-8 font-bold leading-[0.98] tracking-[-0.03em]"
-          style={{fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)"}}
+          className="mb-5 sm:mb-8 font-bold leading-[0.98] tracking-[-0.03em]"
+          style={{fontSize: "clamp(1.5rem, 3.5vw, 2.4rem)"}}
         >
           모든 SNS 링크를 공유하세요.
           <br />
@@ -70,7 +68,7 @@ export function HowItWorks() {
             src="/showcase-v2.png"
             alt="핀터레스트 이미지가 실제 상품으로"
             className="w-full block"
-            style={{objectFit: "cover"}}
+            style={{objectFit: "cover", maxHeight: "220px"}}
           />
         </div>
 

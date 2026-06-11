@@ -159,7 +159,7 @@ export function ChatPreview({
                   color: userFg,
                   borderRadius: "16px 16px 4px 16px",
                   overflow: "hidden",
-                  width: isLg ? "260px" : "180px",
+                  width: isLg ? "min(260px, 70%)" : "min(180px, 60%)",
                   boxShadow: "0 2px 8px rgba(0,122,255,0.18)",
                 }}
               >
@@ -170,7 +170,7 @@ export function ChatPreview({
                   height={isLg ? 140 : 90}
                   style={{
                     width: "100%",
-                    height: isLg ? "140px" : "90px",
+                    height: isLg ? "120px" : "90px",
                     objectFit: "cover",
                     objectPosition: "center 75%",
                     display: "block",
@@ -182,6 +182,7 @@ export function ChatPreview({
                     padding: isLg ? "10px 14px 11px" : "8px 12px 9px",
                     lineHeight: 1.25,
                     letterSpacing: "-0.005em",
+                    textAlign: "left",
                   }}
                 >
                   <div style={{fontSize: isLg ? "0.92rem" : "0.78rem", fontWeight: 600}}>

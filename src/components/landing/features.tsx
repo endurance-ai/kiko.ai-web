@@ -11,22 +11,22 @@ type Feature = {
 const FEATURES: Feature[] = [
   {
     title: "5,000+ 한국 니치 브랜드, 감도 그대로.",
-    body: "무신사·29CM에서 찾기 어려운 한국 니치 디자이너 브랜드 중심의 5,000개+ 카탈로그. 더 저렴한 대안을 찾아도 당신의 감도는 절대 내려가지 않도록 설계했어요.",
+    body: "무신사·29CM엔 없는 한국 니치 브랜드 5,000개+. 더 저렴한 대안을 찾아도 감도는 내려가지 않아요.",
     color: "#E8E2D0",
   },
   {
     title: "몇 주 걸리던 디깅, 이제 30초.",
-    body: "핀터레스트에서 본 무드를 실제 살 수 있는 옷으로 바꾸는 데 평균 30초. 보통 8가지 대안을 한 번에 제안해요. 탭 하나로 결제까지.",
+    body: "링크 공유 즉시 키코와 대화하고, 취향에 맞는 옷을 무제한 추천받으세요.",
     color: "#A8E0B0",
   },
   {
     title: "링크, 사진, 텍스트 — 전부 OK.",
-    body: "핀터레스트 링크, 인스타그램 피드, 스크린샷, 블로그 포스팅까지. 입력 방식에 제한 없어요. 입을 수 있는 것이라면 Kiko가 읽어냅니다.",
+    body: "핀터레스트, 인스타그램, 사진, 텍스트 — 뭐든 OK.",
     color: "#C9D8E2",
   },
   {
     title: "쓸수록 더 나다워져요.",
-    body: "취향, 사이즈, 브랜드 선호도를 기억해 갈수록 더 정확한 추천을 드려요. 한 번 알려두면 매번 말할 필요 없어요.",
+    body: "취향, 사이즈, 브랜드 선호도를 기억해요. 대화할수록 더 정확해져요.",
     color: "#F0E0D0",
   },
 ];
@@ -47,7 +47,7 @@ function VideoCard({src}: {src: string}) {
     <>
       <div
         style={{
-          width: "260px",
+          width: "100%",
           borderRadius: "20px",
           overflow: "hidden",
           boxShadow: "0 12px 40px rgba(13,13,13,0.15)",
@@ -118,11 +118,11 @@ function VideoCard({src}: {src: string}) {
 
 export function Features() {
   return (
-    <section className="px-5 py-16 sm:px-6 sm:py-20">
+    <section className="px-5 py-10 sm:px-6 sm:py-20">
       <div className="mx-auto w-full max-w-[720px]">
         <div
-          className="mb-8 font-bold leading-[0.98] tracking-[-0.03em]"
-          style={{fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)"}}
+          className="mb-5 sm:mb-8 font-bold leading-[0.98] tracking-[-0.03em]"
+          style={{fontSize: "clamp(1.5rem, 3.5vw, 2.4rem)"}}
         >
           kiko가 하는 일
           <br />
@@ -131,10 +131,10 @@ export function Features() {
 
         {/* 영상 2개 — 첫 번째는 위, 두 번째는 아래로 offset */}
         <div className="flex gap-3 mb-8 items-start">
-          <div style={{flexShrink: 0}}>
+          <div className="flex-1 min-w-0 sm:flex-none sm:w-[260px]">
             <VideoCard src="/demo-usage.mp4" />
           </div>
-          <div style={{marginTop: "96px", flexShrink: 0}}>
+          <div className="flex-1 min-w-0 sm:flex-none sm:w-[260px] mt-12 sm:mt-24">
             <VideoCard src="/demo-usage-2.mp4" />
           </div>
         </div>

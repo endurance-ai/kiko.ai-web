@@ -19,6 +19,7 @@ export function Header() {
           style={{height: "52px", width: "auto", alignSelf: "flex-end"}}
         />
         <div
+          className="hidden sm:block"
           style={{
             background: "#FFFFFF",
             borderRadius: "16px 16px 16px 4px",
