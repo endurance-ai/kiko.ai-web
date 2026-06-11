@@ -6,12 +6,12 @@ export function InstallSection() {
   return (
     <section
       id="waitlist"
-      className="px-5 py-16 sm:px-6 sm:py-20"
+      className="px-5 py-10 sm:px-6 sm:py-20"
       style={{background: "#0D0D0D"}}
     >
       <div className="mx-auto w-full max-w-[720px]">
         <div
-          className="mb-8 font-bold leading-[0.98] tracking-[-0.03em]"
+          className="mb-5 sm:mb-8 font-bold leading-[0.98] tracking-[-0.03em]"
           style={{fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)"}}
         >
           <div style={{color: "#FFFFFF"}}>지금 바로 시작하세요</div>

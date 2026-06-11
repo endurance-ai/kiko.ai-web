@@ -24,13 +24,13 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="px-5 pt-8 pb-14 sm:px-6 sm:pt-12 sm:pb-20">
+    <section className="px-5 pt-8 pb-14 sm:px-6 sm:pt-12 sm:pb-20" style={{overflowX: "hidden"}}>
       <div className="mx-auto w-full max-w-[720px] flex flex-col items-center text-center">
 
         {/* Headline */}
         <h1
           className="font-bold leading-[0.95] tracking-[-0.035em]"
-          style={{fontSize: "clamp(2.2rem, 6vw, 3.5rem)"}}
+          style={{fontSize: "clamp(2rem, 6vw, 3.5rem)"}}
         >
           Shop 5000+ fashion brand
           <br />
@@ -76,24 +76,24 @@ export function Hero() {
         </p>
 
         {/* CTAs */}
-        <div className="mt-7 flex flex-wrap justify-center gap-2.5">
+        <div className="mt-7 flex justify-center gap-2">
           <a
             href="https://t.me/kiko_fashion_ai_bot"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 font-bold transition-transform duration-150 ease-out hover:-translate-y-0.5"
+            className="inline-flex items-center justify-center gap-1.5 font-bold transition-transform duration-150 ease-out hover:-translate-y-0.5"
             style={{
               background: "#0D0D0D",
               color: "#FFFFFF",
-              fontSize: "1.05rem",
+              fontSize: "0.82rem",
               letterSpacing: "-0.015em",
-              padding: "16px 26px",
+              padding: "8px 18px",
               borderRadius: "999px",
-              boxShadow: "0 8px 20px rgba(13,13,13,0.18)",
+              boxShadow: "0 6px 16px rgba(13,13,13,0.15)",
             }}
           >
             Get started
-            <span aria-hidden style={{fontSize: "1.2rem", lineHeight: 1}}>→</span>
+            <span aria-hidden style={{fontSize: "1rem", lineHeight: 1}}>→</span>
           </a>
           <a
             href="#how"
@@ -101,9 +101,9 @@ export function Hero() {
             style={{
               background: "rgba(13,13,13,0.05)",
               color: "#0D0D0D",
-              fontSize: "1.05rem",
+              fontSize: "0.82rem",
               letterSpacing: "-0.015em",
-              padding: "16px 24px",
+              padding: "8px 18px",
               borderRadius: "999px",
             }}
           >
