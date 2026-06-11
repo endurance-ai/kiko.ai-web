@@ -30,7 +30,7 @@ export function Hero() {
         {/* Headline */}
         <h1
           className="font-bold leading-[0.95] tracking-[-0.035em]"
-          style={{fontSize: "clamp(2rem, 6vw, 3.5rem)"}}
+          style={{fontSize: "clamp(2.2rem, 6vw, 3.5rem)"}}
         >
           Shop 5000+ fashion brand
           <br />
@@ -67,7 +67,7 @@ export function Hero() {
           className="mt-9 max-w-[480px]"
           style={{
             color: "rgba(13,13,13,0.65)",
-            fontSize: "1.05rem",
+            fontSize: "0.95rem",
             lineHeight: 1.5,
             letterSpacing: "-0.005em",
           }}
@@ -85,9 +85,9 @@ export function Hero() {
             style={{
               background: "#0D0D0D",
               color: "#FFFFFF",
-              fontSize: "0.82rem",
+              fontSize: "1rem",
               letterSpacing: "-0.015em",
-              padding: "8px 18px",
+              padding: "12px 22px",
               borderRadius: "999px",
               boxShadow: "0 6px 16px rgba(13,13,13,0.15)",
             }}
@@ -101,9 +101,9 @@ export function Hero() {
             style={{
               background: "rgba(13,13,13,0.05)",
               color: "#0D0D0D",
-              fontSize: "0.82rem",
+              fontSize: "1rem",
               letterSpacing: "-0.015em",
-              padding: "8px 18px",
+              padding: "12px 22px",
               borderRadius: "999px",
             }}
           >
