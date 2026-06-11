@@ -1,252 +1,145 @@
 "use client";
 
-import {useState, type FormEvent} from "react";
-
-// ────────────────────────────────────────────────────────────────────
-// Google Form 연결 — 폼 만들고 두 값만 채우면 작동.
-// 1) https://forms.google.com 에서 새 폼 생성, "단답형" 이메일 질문 1개 추가
-// 2) 우상단 "보내기 (Send)" → 링크 아이콘 → URL 복사
-//    예: https://docs.google.com/forms/d/e/FAIp.../viewform
-//    여기서 /viewform → /formResponse 로 바꾼 게 FORM_ACTION
-// 3) 폼 페이지 우측 점3개 → "사전 입력된 링크 가져오기" → 이메일 칸에 아무 값 입력
-//    → 링크 받기 → 받은 링크에서 entry.XXXXXXX 부분이 EMAIL_FIELD
-// ────────────────────────────────────────────────────────────────────
-const FORM_ACTION =
-  "https://docs.google.com/forms/d/e/1FAIpQLSepk1RPVL_FTexWyhIQK6ggzGXK7nVquBgjF5vNZ5eXwAQv7Q/formResponse";
-const EMAIL_FIELD = "entry.245608156";
+const TELEGRAM_URL = "https://t.me/kiko_fashion_ai_bot";
 
 export function InstallSection() {
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-
-  const valid = /\S+@\S+\.\S+/.test(email);
-
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!valid || submitting) return;
-    setSubmitting(true);
-    try {
-      const body = new FormData();
-      body.append(EMAIL_FIELD, email);
-      await fetch(FORM_ACTION, {method: "POST", mode: "no-cors", body});
-    } catch {
-      // no-cors response is opaque — assume success
-    }
-    setSent(true);
-    setSubmitting(false);
-  };
-
   return (
     <section
       id="waitlist"
       className="px-5 py-16 sm:px-6 sm:py-20"
-      style={{background: "#0D0D0D", color: "#FFFFFF"}}
+      style={{background: "#0D0D0D"}}
     >
       <div className="mx-auto w-full max-w-[720px]">
         <div
-          className="mb-4 font-bold leading-[0.98] tracking-[-0.03em]"
+          className="mb-8 font-bold leading-[0.98] tracking-[-0.03em]"
           style={{fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)"}}
         >
-          Join the waitlist
-          <br />
-          <span style={{color: "rgba(255,255,255,0.35)"}}>
-            be first to chat
-          </span>
+          <div style={{color: "#FFFFFF"}}>지금 바로 시작하세요</div>
+          <div style={{color: "rgba(255,255,255,0.3)"}}>베타 오픈 중</div>
         </div>
 
-        <p
-          className="mb-8 max-w-[480px]"
-          style={{
-            color: "rgba(255,255,255,0.55)",
-            fontSize: "0.98rem",
-            lineHeight: 1.5,
-            letterSpacing: "-0.005em",
-          }}
-        >
-          Kiko rolls out channel-by-channel. Drop your email and we&apos;ll send
-          the install link the moment your spot opens.
-        </p>
-
-        {/* iMessage panel backdrop (blurred, decorative) + email overlay */}
-        <div className="relative">
-          <ImessageBackdrop />
-
-          {/* Glassmorphism overlay holding the email form */}
+        <div className="grid gap-3 sm:grid-cols-2">
+          {/* 텔레그램 */}
           <div
-            className="absolute inset-0 flex items-center justify-center p-4 sm:p-6"
+            className="flex flex-col p-6"
             style={{
-              background: "rgba(13,13,13,0.08)",
-              backdropFilter: "blur(2.5px) saturate(130%)",
-              WebkitBackdropFilter: "blur(2.5px) saturate(130%)",
-              borderRadius: "18px",
+              background: "#C9D8E2",
+              borderRadius: "20px",
             }}
           >
-            <form
-              onSubmit={onSubmit}
-              className="w-full max-w-[420px]"
+            <div className="flex items-center gap-2 mb-4">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#0D0D0D">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.19 13.6l-2.965-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.963.959z"/>
+              </svg>
+              <span className="font-semibold" style={{fontSize: "0.82rem", color: "rgba(13,13,13,0.55)", letterSpacing: "-0.01em"}}>Telegram</span>
+              <span
+                className="font-semibold"
+                style={{
+                  fontSize: "0.78rem",
+                  background: "#A8E0B0",
+                  color: "#0D0D0D",
+                  borderRadius: "999px",
+                  padding: "5px 12px",
+                  marginLeft: "auto",
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                베타 오픈 중
+              </span>
+            </div>
+
+            <div
+              className="font-bold mb-2"
+              style={{fontSize: "1.25rem", letterSpacing: "-0.025em", lineHeight: 1.1, color: "#0D0D0D"}}
+            >
+              텔레그램에서 만나보기
+            </div>
+            <div
+              className="mb-6 flex-1"
+              style={{fontSize: "0.875rem", color: "rgba(13,13,13,0.55)", lineHeight: 1.5}}
+            >
+              SNS 링크로 즉시 시작하세요.
+            </div>
+
+            <a
+              href={TELEGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 font-bold transition-transform duration-150 hover:-translate-y-0.5"
               style={{
-                background: "#FFFFFF",
-                color: "#0D0D0D",
-                borderRadius: "16px",
-                padding: "18px",
-                boxShadow: "0 20px 50px rgba(0,0,0,0.35)",
+                background: "#0D0D0D",
+                color: "#FFFFFF",
+                borderRadius: "12px",
+                padding: "13px",
+                fontSize: "0.92rem",
+                letterSpacing: "-0.01em",
+                textDecoration: "none",
               }}
             >
-              <div
-                className="mb-3 font-bold"
-                style={{fontSize: "1.1rem", letterSpacing: "-0.015em"}}
-              >
-                Get your install link
-              </div>
+              Get started →
+            </a>
+          </div>
 
-              {sent ? (
-                <div
-                  style={{
-                    background: "#A8E0B0",
-                    borderRadius: "12px",
-                    padding: "14px 16px",
-                    fontSize: "0.92rem",
-                    fontWeight: 600,
-                    color: "#0D0D0D",
-                    lineHeight: 1.4,
-                  }}
-                >
-                  ✓ You&apos;re on the list. Check your inbox soon 🐾
-                </div>
-              ) : (
-                <>
-                  <div className="flex items-stretch gap-2">
-                    <input
-                      type="email"
-                      inputMode="email"
-                      autoComplete="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="you@gmail.com"
-                      className="min-w-0 flex-1 border-0 outline-none"
-                      style={{
-                        background: "rgba(13,13,13,0.04)",
-                        borderRadius: "12px",
-                        padding: "14px 16px",
-                        fontWeight: 500,
-                        fontSize: "0.95rem",
-                        color: "#0D0D0D",
-                        letterSpacing: "-0.005em",
-                      }}
-                    />
-                    <button
-                      type="submit"
-                      disabled={!valid || submitting}
-                      className="flex items-center justify-center border-0 transition-transform duration-150 ease-out hover:translate-x-0.5"
-                      style={{
-                        borderRadius: "12px",
-                        minWidth: "56px",
-                        background: valid ? "#0D0D0D" : "rgba(13,13,13,0.15)",
-                        color: valid ? "#fff" : "rgba(13,13,13,0.35)",
-                        fontSize: "1.2rem",
-                        fontWeight: 700,
-                        cursor:
-                          valid && !submitting ? "pointer" : "not-allowed",
-                      }}
-                    >
-                      {submitting ? "…" : "→"}
-                    </button>
-                  </div>
-                  <div
-                    className="mt-2.5"
-                    style={{
-                      fontSize: "0.78rem",
-                      color: "rgba(13,13,13,0.55)",
-                      lineHeight: 1.35,
-                    }}
-                  >
-                    We&apos;ll only email you once — when your spot opens.
-                  </div>
-                </>
-              )}
-            </form>
+          {/* iOS 앱 */}
+          <div
+            className="flex flex-col p-6"
+            style={{
+              background: "#E8E2D0",
+              borderRadius: "20px",
+              opacity: 0.55,
+            }}
+          >
+            <div className="flex items-center gap-2 mb-4">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(13,13,13,0.5)">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+              </svg>
+              <span className="font-semibold" style={{fontSize: "0.82rem", color: "rgba(13,13,13,0.45)", letterSpacing: "-0.01em"}}>iOS App</span>
+              <span
+                className="font-semibold"
+                style={{
+                  fontSize: "0.78rem",
+                  background: "rgba(13,13,13,0.1)",
+                  color: "rgba(13,13,13,0.45)",
+                  borderRadius: "999px",
+                  padding: "5px 12px",
+                  marginLeft: "auto",
+                  letterSpacing: "-0.01em",
+                }}
+              >
+                준비 중
+              </span>
+            </div>
+
+            <div
+              className="font-bold mb-2"
+              style={{fontSize: "1.25rem", letterSpacing: "-0.025em", lineHeight: 1.1, color: "rgba(13,13,13,0.55)"}}
+            >
+              iOS 앱 출시 예정
+            </div>
+            <div
+              className="mb-6 flex-1"
+              style={{fontSize: "0.875rem", color: "rgba(13,13,13,0.4)", lineHeight: 1.5}}
+            >
+              더 빠르고 편리한 네이티브 앱을 준비하고 있어요.
+            </div>
+
+            <div
+              className="inline-flex items-center justify-center font-bold"
+              style={{
+                background: "rgba(13,13,13,0.1)",
+                color: "rgba(13,13,13,0.3)",
+                borderRadius: "12px",
+                padding: "13px",
+                fontSize: "0.92rem",
+                letterSpacing: "-0.01em",
+                cursor: "not-allowed",
+              }}
+            >
+              Coming soon
+            </div>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-/** Decorative iMessage-style card peeking through the glass overlay. */
-function ImessageBackdrop() {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none select-none"
-      style={{
-        background: "#A8E0B0",
-        borderRadius: "18px",
-        padding: "24px",
-        minHeight: "260px",
-      }}
-    >
-      <div
-        className="mb-3 font-bold"
-        style={{fontSize: "1.2rem", color: "#0D0D0D", letterSpacing: "-0.015em"}}
-      >
-        Text yourself the link
-      </div>
-      <div className="flex items-stretch gap-2">
-        <div
-          style={{
-            background: "#FFFFFF",
-            borderRadius: "12px",
-            padding: "0 14px",
-            fontWeight: 600,
-            fontSize: "0.95rem",
-            color: "#0D0D0D",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          +82
-        </div>
-        <div
-          className="flex-1"
-          style={{
-            background: "#FFFFFF",
-            borderRadius: "12px",
-            padding: "14px 16px",
-            fontWeight: 500,
-            fontSize: "0.95rem",
-            color: "rgba(13,13,13,0.35)",
-          }}
-        >
-          010 0000 0000
-        </div>
-        <div
-          style={{
-            borderRadius: "12px",
-            width: "48px",
-            background: "#0D0D0D",
-            color: "#fff",
-            fontSize: "1.2rem",
-            fontWeight: 700,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          →
-        </div>
-      </div>
-      <div
-        className="mt-2.5"
-        style={{
-          fontSize: "0.8rem",
-          color: "rgba(13,13,13,0.55)",
-          lineHeight: 1.35,
-        }}
-      >
-        We&apos;ll text you the install link.
-      </div>
-    </div>
   );
 }

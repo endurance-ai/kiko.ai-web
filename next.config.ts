@@ -37,6 +37,15 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  async redirects() {
+    return [
+      {
+        source: "/price",
+        destination: "/#pricing",
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       {

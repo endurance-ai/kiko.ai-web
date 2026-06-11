@@ -1,37 +1,70 @@
 "use client";
 
-import Image from "next/image";
 import {ChatPreview} from "./chat-preview";
+import {useState, useEffect} from "react";
+
+const SNS = [
+  {src: "/logos/pinterest-wordmark.svg", label: "Pinterest"},
+  {src: "/logos/instagram-wordmark.svg", label: "Instagram"},
+];
 
 export function Hero() {
+  const [idx, setIdx] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIdx((i) => (i + 1) % SNS.length);
+        setVisible(true);
+      }, 220);
+    }, 2200);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="px-5 pt-8 pb-14 sm:px-6 sm:pt-12 sm:pb-20">
-      <div className="mx-auto w-full max-w-[720px]">
-        {/* Headline + cat — stack on mobile, inline on sm+ */}
-        <div className="flex flex-col items-start sm:flex-row sm:items-end sm:gap-0">
-          <h1
-            className="font-bold leading-[0.95] tracking-[-0.035em] sm:shrink-0"
-            style={{fontSize: "clamp(2.4rem, 9vw, 4.8rem)"}}
-          >
-            Stop browsing.
-            <br />
-            <span style={{color: "rgba(13,13,13,0.3)"}}>Ask kiko.</span>
-          </h1>
-          <Image
-            src="/kiko-cat.png"
-            alt="Kiko"
-            width={320}
-            height={320}
-            priority
-            className="-mt-3 ml-auto block w-auto shrink-0 object-contain object-bottom sm:mt-0 sm:ml-[-8px]"
-            style={{
-              height: "calc(clamp(2.4rem, 9vw, 4.8rem) * 0.95 * 2)",
-            }}
-          />
-        </div>
+      <div className="mx-auto w-full max-w-[720px] flex flex-col items-center text-center">
 
+        {/* Headline */}
+        <h1
+          className="font-bold leading-[0.95] tracking-[-0.035em]"
+          style={{fontSize: "clamp(2.2rem, 6vw, 3.5rem)"}}
+        >
+          Shop 5000+ fashion brand
+          <br />
+          <span
+            className="inline-flex items-center justify-center gap-2"
+            style={{color: "rgba(13,13,13,0.3)"}}
+          >
+            through{" "}
+            <span style={{display: "inline-block", position: "relative", width: "3.6em", height: "1.0em", verticalAlign: "middle"}}>
+              {SNS.map(({src, label}, i) => (
+                <img
+                  key={label}
+                  src={src}
+                  alt={label}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: 0,
+                    transform: "translateY(-50%)",
+                    width: "100%",
+                    height: "auto",
+                    opacity: i === idx && visible ? 1 : 0,
+                    transition: "opacity 0.22s ease",
+                  }}
+                />
+              ))}
+            </span>
+            {" "}link.
+          </span>
+        </h1>
+
+        {/* Description */}
         <p
-          className="mt-6 max-w-[540px]"
+          className="mt-9 max-w-[480px]"
           style={{
             color: "rgba(13,13,13,0.65)",
             fontSize: "1.05rem",
@@ -39,16 +72,15 @@ export function Hero() {
             letterSpacing: "-0.005em",
           }}
         >
-          Kiko is your fashion-hunting cat. Drop a Pinterest outfit, an
-          Instagram fit, a TikTok haul, or a product page — she finds the same
-          look in clothes you can actually afford, delivered to your chat in
-          about 30 seconds.
+<span style={{color: "#0D0D0D", fontWeight: 700}}>{"패션 디깅을 위해 태어난 AI."}</span><br />{"핀터레스트 무드를 실제 살 수 있는 옷으로 바꾸세요."}<br />{"감도는 비슷하고, 더 저렴한 옷을 찾는데 최적화되었습니다."}
         </p>
 
-        {/* Primary CTAs — directly under headline so they're visible above the fold */}
-        <div className="mt-7 flex flex-wrap gap-2.5">
+        {/* CTAs */}
+        <div className="mt-7 flex flex-wrap justify-center gap-2.5">
           <a
-            href="#waitlist"
+            href="https://t.me/kiko_fashion_ai_bot"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 font-bold transition-transform duration-150 ease-out hover:-translate-y-0.5"
             style={{
               background: "#0D0D0D",
@@ -60,10 +92,8 @@ export function Hero() {
               boxShadow: "0 8px 20px rgba(13,13,13,0.18)",
             }}
           >
-            Join the waitlist
-            <span aria-hidden style={{fontSize: "1.2rem", lineHeight: 1}}>
-              →
-            </span>
+            Get started
+            <span aria-hidden style={{fontSize: "1.2rem", lineHeight: 1}}>→</span>
           </a>
           <a
             href="#how"
@@ -77,14 +107,15 @@ export function Hero() {
               borderRadius: "999px",
             }}
           >
-            How it works
+            어떻게 작동해요?
           </a>
         </div>
 
-        {/* Chat preview — full container width, auto-cycles iMessage ↔ Telegram */}
-        <div className="mt-10">
+        {/* Demo / Chat preview */}
+        <div className="mt-10 w-full">
           <ChatPreview size="lg" />
         </div>
+
       </div>
     </section>
   );
