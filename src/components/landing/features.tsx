@@ -47,7 +47,7 @@ function VideoCard({src}: {src: string}) {
     <>
       <div
         style={{
-          width: "260px",
+          width: "100%",
           borderRadius: "20px",
           overflow: "hidden",
           boxShadow: "0 12px 40px rgba(13,13,13,0.15)",
@@ -131,10 +131,10 @@ export function Features() {
 
         {/* 영상 2개 — 첫 번째는 위, 두 번째는 아래로 offset */}
         <div className="flex gap-3 mb-8 items-start">
-          <div style={{flexShrink: 0}}>
+          <div className="flex-1 min-w-0 sm:flex-none sm:w-[260px]">
             <VideoCard src="/demo-usage.mp4" />
           </div>
-          <div style={{marginTop: "96px", flexShrink: 0}}>
+          <div className="flex-1 min-w-0 sm:flex-none sm:w-[260px] mt-12 sm:mt-24">
             <VideoCard src="/demo-usage-2.mp4" />
           </div>
         </div>
