@@ -19,17 +19,19 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      scriptSrc,
+      // GTM and GA4 require googletagmanager.com and google-analytics.com
+      scriptSrc + " https://www.googletagmanager.com",
       // Pretendard font is served from jsdelivr CDN (loaded in app/layout.tsx <head>)
       "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
-      "img-src 'self' data: blob:",
+      "img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com",
       "font-src 'self' https://cdn.jsdelivr.net",
       // Waitlist form submits to Google Forms via fetch (no-cors)
-      "connect-src 'self' https://docs.google.com",
+      // GA4 sends data to google-analytics.com and analytics.google.com
+      "connect-src 'self' https://docs.google.com https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net",
+      // GTM noscript iframe
+      "frame-src https://www.googletagmanager.com",
       "frame-ancestors 'none'",
       "base-uri 'self'",
-      // Google Forms POST is fetch (under connect-src), but a plain <form action="..."> fallback
-      // would need https://docs.google.com here too.
       "form-action 'self' https://docs.google.com",
     ].join("; "),
   },
