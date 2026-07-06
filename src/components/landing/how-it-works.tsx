@@ -13,20 +13,20 @@ const B = ({children}: {children: ReactNode}) => (
 const STEPS: Step[] = [
   {
     num: "01",
-    title: "패션 링크를 보내세요.",
+    title: "채팅으로 간단하게 시작하세요.",
     body: (
       <>
-        핀터레스트 무드보드, 인스타그램 피드, 사진 한 장 —{" "}
-        <B>뭐든 괜찮아요.</B>
+        인스타그램 링크, 핀터레스트 공유하기, 이미지, 텍스트로{" "}
+        <B>시작하기.</B>
       </>
     ),
   },
   {
     num: "02",
-    title: "Kiko가 옷장을 뒤집니다.",
+    title: "머릿속 그 옷, 마법처럼 눈 앞에.",
     body: (
       <>
-        키코와 함께 원하는 만큼 즉시 디깅하세요. 당신이 만족할 때까지 멈추지 않아요.
+        당신 취향을 아는 Kiko가 수천 개 인디 디자이너 브랜드를 대신 뒤져, 원하는 옷을 찾아옵니다.
       </>
     ),
   },
@@ -54,9 +54,9 @@ export function HowItWorks() {
           className="mb-5 sm:mb-8 font-bold leading-[0.98] tracking-[-0.03em]"
           style={{fontSize: "clamp(1.5rem, 3.5vw, 2.4rem)"}}
         >
-          모든 SNS 링크를 공유하세요.
+          채팅 하나로 시작하세요.
           <br />
-          <span style={{color: "rgba(13,13,13,0.3)"}}>동일 감도, 더 나은 가격</span>
+          <span style={{color: "rgba(13,13,13,0.3)"}}>수천 개 인디 디자이너 브랜드 디깅</span>
         </div>
 
         {/* Visual showcase */}

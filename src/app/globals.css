@@ -45,6 +45,36 @@
   }
 }
 
+/* Mobile header — fade the page bg into transparency behind the floating
+   logo + CTA so content scrolling underneath softly melts away. Desktop keeps
+   the header fully transparent. */
+.header-mobile-fade {
+  background: transparent;
+  isolation: isolate;
+}
+.header-mobile-fade::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: -44px;
+  background: linear-gradient(
+    to bottom,
+    #f0f0f2 0%,
+    rgba(240, 240, 242, 0.92) 40%,
+    rgba(240, 240, 242, 0.6) 70%,
+    rgba(240, 240, 242, 0) 100%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+@media (min-width: 640px) {
+  .header-mobile-fade::before {
+    display: none;
+  }
+}
+
 /* Legal pages (terms / privacy) — minimal prose styles. */
 .legal-prose {
   color: var(--color-ink);

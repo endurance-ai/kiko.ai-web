@@ -64,15 +64,15 @@ export function Hero() {
 
         {/* Description */}
         <p
-          className="mt-9 max-w-[480px]"
+          className="mt-9 max-w-[560px]"
           style={{
             color: "rgba(13,13,13,0.65)",
-            fontSize: "0.95rem",
+            fontSize: "clamp(1.05rem, 2.4vw, 1.2rem)",
             lineHeight: 1.5,
             letterSpacing: "-0.005em",
           }}
         >
-<span style={{color: "#0D0D0D", fontWeight: 700}}>{"패션 디깅을 위해 태어난 AI."}</span><br />{"핀터레스트 무드를 실제 살 수 있는 옷으로 바꾸세요."}<br />{"감도는 비슷하고, 더 저렴한 옷을 찾는데 최적화되었습니다."}
+<span style={{color: "#0D0D0D", fontWeight: 700}}>{"GPT와 구글은 당신의 패션 취향을 모릅니다."}</span><br />{"당신 취향을 아는 AI로 5,000개+ 디자이너 브랜드를 디깅하세요."}
         </p>
 
         {/* CTAs */}

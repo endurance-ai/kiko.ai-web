@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <div className="w-full" style={{background: "#F0F0F2"}}>
       <Header />
-      <main style={{paddingTop: "56px"}}>
+      <main className="pt-[54px] sm:pt-14">
         <Hero />
         <HowItWorks />
         <Features />
