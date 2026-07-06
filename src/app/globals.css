@@ -1,26 +1,147 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Kikoweb design system — light, solid, Helvetica bold.
+   Tokens mirror docs/DESIGN_SYSTEM.md (page bg #F0F0F2, card #FFFFFF, text #0D0D0D). */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-page: #f0f0f2;
+  --color-card: #ffffff;
+  --color-ink: #0d0d0d;
+  --color-ink-muted: rgba(13, 13, 13, 0.55);
+  --color-ink-faded: rgba(13, 13, 13, 0.3);
+  --color-tint: rgba(13, 13, 13, 0.04);
+  --color-tint-hover: rgba(13, 13, 13, 0.06);
+
+  --color-beige: #e8e2d0;
+  --color-tg: #c9d8e2;
+  --color-im: #a8e0b0;
+
+  --color-save-deep: #1b8a3a;
+  --color-save-light: #2ebd52;
+
+  --font-sans: "Helvetica Neue", Helvetica, "Pretendard Variable", Pretendard,
+    "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Reset must live INSIDE @layer base so Tailwind utilities (e.g. mx-auto)
+   in @layer utilities win the cascade. Plain (unlayered) rules outrank
+   layered rules, which silently breaks centering. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    width: 100%;
+    background: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.005em;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Mobile header — fade the page bg into transparency behind the floating
+   logo + CTA so content scrolling underneath softly melts away. Desktop keeps
+   the header fully transparent. */
+.header-mobile-fade {
+  background: transparent;
+  isolation: isolate;
+}
+.header-mobile-fade::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: -44px;
+  background: linear-gradient(
+    to bottom,
+    #f0f0f2 0%,
+    rgba(240, 240, 242, 0.92) 40%,
+    rgba(240, 240, 242, 0.6) 70%,
+    rgba(240, 240, 242, 0) 100%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+@media (min-width: 640px) {
+  .header-mobile-fade::before {
+    display: none;
+  }
+}
+
+/* Legal pages (terms / privacy) — minimal prose styles. */
+.legal-prose {
+  color: var(--color-ink);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+}
+.legal-prose h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 2rem;
+  letter-spacing: -0.01em;
+}
+.legal-prose h3 {
+  font-size: 1.02rem;
+  font-weight: 700;
+  margin: 2rem 0 0.75rem;
+  letter-spacing: -0.005em;
+}
+.legal-prose p {
+  margin: 0.6rem 0;
+}
+.legal-prose ol,
+.legal-prose ul {
+  padding-left: 1.4rem;
+  margin: 0.6rem 0;
+}
+.legal-prose ol {
+  list-style: decimal;
+}
+.legal-prose ul {
+  list-style: disc;
+}
+.legal-prose li {
+  margin: 0.3rem 0;
+}
+.legal-prose strong {
+  font-weight: 700;
+}
+.legal-prose hr {
+  border: 0;
+  border-top: 1px solid rgba(13, 13, 13, 0.1);
+  margin: 2.5rem 0 1.5rem;
+}
+.legal-prose blockquote {
+  border-left: 3px solid rgba(13, 13, 13, 0.15);
+  padding: 0.3rem 0 0.3rem 1rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+.legal-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin: 1rem 0;
+}
+.legal-prose th,
+.legal-prose td {
+  border: 1px solid rgba(13, 13, 13, 0.12);
+  padding: 0.5rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+.legal-prose th {
+  background: rgba(13, 13, 13, 0.04);
+  font-weight: 600;
+}
+.legal-prose a {
+  text-decoration: underline;
 }
