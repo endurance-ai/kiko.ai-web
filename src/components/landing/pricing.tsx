@@ -21,8 +21,8 @@ const PLANS: Plan[] = [
     features: [
       "5,000+ 브랜드 기반 디깅",
       "하루 10회 검색",
-      "텍스트 · 링크로 검색",
-      "iMessage · Telegram",
+      "텍스트, 링크로 검색",
+      "iOS 앱에서 이용",
       "기본 취향 프로필",
     ],
     cta: "Get started",
@@ -107,11 +107,11 @@ const STYLES: Record<Plan["style"], CardStyle> = {
 export function Pricing() {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
 
-  const TELEGRAM_URL = "https://t.me/kiko_fashion_ai_bot";
+  const APP_STORE_URL = "https://apps.apple.com/kr/app/kiko-ai/id6787153872";
 
   const handleCta = (plan: Plan) => {
     if (!plan.paid) {
-      window.open(TELEGRAM_URL, "_blank");
+      window.open(APP_STORE_URL, "_blank");
       return;
     }
     setSelectedPlan(plan.name);
@@ -219,7 +219,7 @@ export function Pricing() {
 }
 
 function FakeDoorModal({planName, onClose}: {planName: string; onClose: () => void}) {
-  const TELEGRAM_URL = "https://t.me/kiko_fashion_ai_bot";
+  const APP_STORE_URL = "https://apps.apple.com/kr/app/kiko-ai/id6787153872";
 
   return (
     <div
@@ -245,11 +245,11 @@ function FakeDoorModal({planName, onClose}: {planName: string; onClose: () => vo
           className="mb-6"
           style={{fontSize: "0.9rem", color: "rgba(13,13,13,0.55)", lineHeight: 1.6, letterSpacing: "-0.005em"}}
         >
-          <span className="font-semibold" style={{color: "#0D0D0D"}}>{planName}</span> 플랜에 관심 가져주셔서 감사해요. 지금은 텔레그램 베타로 먼저 시작해보세요!
+          <span className="font-semibold" style={{color: "#0D0D0D"}}>{planName}</span> 플랜에 관심 가져주셔서 감사해요. 지금은 iOS 앱의 무료 플랜으로 먼저 시작해보세요!
         </div>
 
         <a
-          href={TELEGRAM_URL}
+          href={APP_STORE_URL}
           target="_blank"
           rel="noopener noreferrer"
           onClick={onClose}
@@ -264,7 +264,7 @@ function FakeDoorModal({planName, onClose}: {planName: string; onClose: () => vo
             textDecoration: "none",
           }}
         >
-          텔레그램에서 시작하기 →
+          App Store에서 시작하기 →
         </a>
 
         <button
