@@ -28,12 +28,15 @@ export function Footer() {
             개인정보처리방침
           </Link>
         </div>
-        <span
+        <a
+          href="https://apps.apple.com/kr/app/kiko-ai/id6787153872"
+          target="_blank"
+          rel="noopener noreferrer"
           className="font-semibold"
           style={{color: "rgba(13,13,13,0.55)"}}
         >
-          @kiko_fashion_ai_bot
-        </span>
+          Download on the App Store →
+        </a>
       </div>
     </footer>
   );

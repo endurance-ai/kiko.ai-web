@@ -14,7 +14,7 @@ export function Header() {
       </div>
 
       <a
-        href="https://t.me/kiko_fashion_ai_bot"
+        href="https://apps.apple.com/kr/app/kiko-ai/id6787153872"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center justify-center gap-1.5 font-bold transition-transform duration-150 ease-out hover:-translate-y-0.5 text-[0.82rem] sm:text-[0.88rem] px-[18px] py-[6px] sm:px-[18px] sm:py-[9px]"
