@@ -3,12 +3,12 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "kiko.ai — Stop browsing. Ask kiko.ai",
+  title: "Kiko | AI-Powered Fashion Discovery Platform",
   description:
     "Drop any link. Kiko finds a piece with the same vibe — for less. Chat with kiko on iMessage or Telegram.",
   metadataBase: new URL("https://kikoai.me"),
   openGraph: {
-    title: "kiko.ai — Stop browsing. Ask kiko.ai",
+    title: "Kiko | AI-Powered Fashion Discovery Platform",
     description:
       "Drop any link. Kiko finds a piece with the same vibe — for less.",
     url: "https://kikoai.me",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "kiko.ai — Stop browsing. Ask kiko.ai",
+    title: "Kiko | AI-Powered Fashion Discovery Platform",
     description:
       "Drop any link. Kiko finds a piece with the same vibe — for less.",
   },
